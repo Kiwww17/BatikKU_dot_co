@@ -1,5 +1,10 @@
 USE toko_online;
 
+-- Seed ini idempotent (aman dijalankan berulang):
+--   - users  : UNIQUE(email) + ON DUPLICATE KEY UPDATE
+--   - products: UNIQUE(title, daerah) + ON DUPLICATE KEY UPDATE
+--               (unique key dibuat oleh blok MIGRASI di schema.sql)
+
 -- Seed: 1 admin account
 -- Email: admin@toko.com | Password: admin123
 INSERT INTO users (name, email, password, role)
@@ -220,4 +225,11 @@ INSERT INTO products (title, description, image_url, price, stock, daerah, gende
   'Motif lung-lungan menampilkan sulur tumbuhan yang meliuk lembut. Blouse wanita dengan nuansa hijau daun.',
   'https://images.unsplash.com/photo-1551232864-3f0890e580d9?w=400',
   290000, 19, 'Kudus', 'Wanita', 'Pendek'
-);
+)
+ON DUPLICATE KEY UPDATE
+  description = VALUES(description),
+  image_url   = VALUES(image_url),
+  price       = VALUES(price),
+  stock       = VALUES(stock),
+  gender      = VALUES(gender),
+  lengan      = VALUES(lengan);

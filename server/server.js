@@ -113,7 +113,7 @@ app.get('/api/products', async (req, res) => {
 app.get('/api/categories', async (req, res) => {
   try {
     const [[daerahRows], [genderRows], [lenganRows]] = await Promise.all([
-      db.query('SELECT DISTINCT daerah FROM products WHERE daerah != "" ORDER BY daerah'),
+      db.query("SELECT DISTINCT daerah FROM products WHERE daerah <> '' ORDER BY daerah"),
       db.query('SELECT DISTINCT gender FROM products ORDER BY gender'),
       db.query('SELECT DISTINCT lengan FROM products ORDER BY lengan'),
     ]);

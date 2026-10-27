@@ -28,6 +28,8 @@ Progress implementasi Toko Batik Online sesuai PRD.md.
 
 - [x] `database/schema.sql` — CREATE TABLE untuk users, products, cart_items, orders, order_items
 - [x] `database/seed.sql` — INSERT admin seed user + 3 contoh produk
+- [x] `database/schema.sql` — seksi MIGRASI idempotent: kolom `daerah`/`gender`/`lengan`, index `daerah`/`lengan`, UNIQUE `(title, daerah)`, FK `order_items.product_id` → `ON DELETE SET NULL` (tanpa `ALTER TABLE ... IF NOT EXISTS` yang tidak didukung MySQL)
+- [x] `database/seed.sql` — idempotent: `ON DUPLICATE KEY UPDATE` (aman dijalankan berulang)
 
 ## Frontend
 
